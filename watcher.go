@@ -14,7 +14,7 @@ func telegramMsg(
 
 	bot, err := tgbotapi.NewBotAPI(telegramApiToken)
 	if err != nil {
-		log.Panic(err)
+		log.Fatalln("Telegram bot error: " + err.Error())
 	}
 
 	bot.Debug = false
@@ -24,7 +24,10 @@ func telegramMsg(
 
 	msg := tgbotapi.NewMessage(telegramChatId, messageText)
 
-	bot.Send(msg)
+	_, sendErr := bot.Send(msg)
+	if sendErr != nil {
+		log.Fatalln("Telegram msg sending error: " + sendErr.Error())
+	}
 
 	updates, _ := bot.GetUpdatesChan(u)
 

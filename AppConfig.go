@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,7 +17,10 @@ type AppConfig struct {
 
 func createAppConfig(configFileName string) AppConfig {
 	config := AppConfig{}
-	configFileData, _ := ioutil.ReadFile(configFileName)
+	configFileData, err := ioutil.ReadFile(configFileName)
+	if err != nil {
+		log.Fatalln("Config file isn't available: " + err.Error())
+	}
 	configText := string(configFileData)
 	re := regexp.MustCompile(`([a-zA-Z].*)=(.+)`)
 	configLines := re.FindAllStringSubmatch(configText, -1)
