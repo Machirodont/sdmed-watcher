@@ -1,3 +1,4 @@
 telegramApiToken=1951234567:AbCdEfGgIg5QLDAbCdEfGgIgXAbCdEfGgIg
 telegramChatId=-4567890123
 sqlDataSourceName=mysql_user:mysql_password@tcp(localhost:3306)/db_name
+priceParseTimeFile=C:\Server\domains\sdmed\stage\parse_price_time.txt
