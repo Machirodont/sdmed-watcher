@@ -37,7 +37,11 @@ func telegramMsg(
 func main() {
 	config := createAppConfig("config.ini")
 	checker := createChecker(config.sqlDataSourceName)
-	checker.checkAppoitmentTimeout()
+	if checker.isWorkingTimeNow() {
+		checker.checkAppoitmentTimeout()
+	}
 	checker.checkPriceLoadTime(config.priceParseTimeFile)
-	telegramMsg(checker.msg, config.telegramApiToken, config.telegramChatId)
+	if checker.msg != "" {
+		telegramMsg(checker.msg, config.telegramApiToken, config.telegramChatId)
+	}
 }

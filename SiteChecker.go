@@ -18,7 +18,7 @@ type SiteChecker struct {
 
 func createChecker(sqlDataSourceName string) SiteChecker {
 	checker := SiteChecker{}
-	checker.msg = "Тестовый режим\n"
+	checker.msg = ""
 
 	db, err := sql.Open("mysql", sqlDataSourceName)
 	if err != nil {
@@ -86,4 +86,8 @@ func (checker *SiteChecker) checkPriceLoadTime(filename string) {
 		formattedTime := time.Unix(lastPriceLoad, 0).Format("2006-01-02 15:04:05")
 		checker.msg += "Цены не обновлялись больше недели (последний раз " + formattedTime + ") \n"
 	}
+}
+
+func (checker *SiteChecker) isWorkingTimeNow() bool {
+	return time.Now().Hour() > 9 && time.Now().Hour() < 20
 }
