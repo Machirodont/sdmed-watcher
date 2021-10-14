@@ -1,4 +1,4 @@
-package main
+package telegram
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func telegramMsg(
+func SendMsg(
 	messageText string,
 	telegramApiToken string,
 	telegramChatId int64,
@@ -32,16 +32,4 @@ func telegramMsg(
 	updates, _ := bot.GetUpdatesChan(u)
 
 	updates.Clear()
-}
-
-func main() {
-	config := createAppConfig("config.ini")
-	checker := createChecker(config.sqlDataSourceName)
-	if checker.isWorkingTimeNow() {
-		checker.checkAppoitmentTimeout()
-	}
-	checker.checkPriceLoadTime(config.priceParseTimeFile)
-	if checker.msg != "" {
-		telegramMsg(checker.msg, config.telegramApiToken, config.telegramChatId)
-	}
 }

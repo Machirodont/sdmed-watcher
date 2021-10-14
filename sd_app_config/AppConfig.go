@@ -1,4 +1,4 @@
-package main
+package sd_app_config
 
 import (
 	"io/ioutil"
@@ -9,13 +9,13 @@ import (
 )
 
 type AppConfig struct {
-	telegramApiToken   string
-	telegramChatId     int64
-	sqlDataSourceName  string
-	priceParseTimeFile string
+	TelegramApiToken   string
+	TelegramChatId     int64
+	SqlDataSourceName  string
+	PriceParseTimeFile string
 }
 
-func createAppConfig(configFileName string) AppConfig {
+func CreateAppConfig(configFileName string) AppConfig {
 	config := AppConfig{}
 	configFileData, err := ioutil.ReadFile(configFileName)
 	if err != nil {
@@ -27,16 +27,16 @@ func createAppConfig(configFileName string) AppConfig {
 
 	for _, line := range configLines {
 		if line[1] == "sqlDataSourceName" {
-			config.sqlDataSourceName = strings.Trim(line[2], " \r\t")
+			config.SqlDataSourceName = strings.Trim(line[2], " \r\t")
 		}
 		if line[1] == "telegramApiToken" {
-			config.telegramApiToken = strings.Trim(line[2], " \r\t")
+			config.TelegramApiToken = strings.Trim(line[2], " \r\t")
 		}
 		if line[1] == "telegramChatId" {
-			config.telegramChatId, _ = strconv.ParseInt(strings.Trim(line[2], " \r\t"), 10, 64)
+			config.TelegramChatId, _ = strconv.ParseInt(strings.Trim(line[2], " \r\t"), 10, 64)
 		}
 		if line[1] == "priceParseTimeFile" {
-			config.priceParseTimeFile = strings.Trim(line[2], " \r\t")
+			config.PriceParseTimeFile = strings.Trim(line[2], " \r\t")
 		}
 	}
 	return config

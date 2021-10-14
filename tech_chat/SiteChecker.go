@@ -35,7 +35,6 @@ func createChecker(sqlDataSourceName string) SiteChecker {
 			checker.db = db
 		}
 	}
-	fmt.Println(checker.db)
 	return checker
 }
 
@@ -43,7 +42,7 @@ func (checker *SiteChecker) checkAppoitmentTimeout() {
 	if checker.db == nil {
 		return
 	}
-	timeLimit := 2
+	timeLimit := 2 //Hours
 	nanosecInHour := 60 * 60 * 1000000000
 	alarmTime := time.Now().Add(time.Duration(-timeLimit * nanosecInHour)).Format("2006-01-02 15:04:05")
 	rows, err := checker.db.Query(`SELECT count(*) FROM sd_appointment WHERE status=0 AND created<"` + alarmTime + `"`)
